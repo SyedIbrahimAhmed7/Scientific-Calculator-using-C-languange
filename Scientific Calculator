@@ -2,54 +2,68 @@
 #include <math.h>
 
 // Function declarations
-void performBasicOperation(int choice);
-void performTrigonometricOperation(int choice);
+void BasicOperation(int choice);
+void TrigonometricOperation(int choice);
+double AlgebraicOperation(int choice, double num1, double num2);
 
 int main() {
     int choice;
+    double num1, num2, result;
 
     while (1) {
         // Display menu for the combined calculator
         printf("\n Scientific Calculator Menu:\n");
-        printf("\n Basic Operations:\n");
+        printf("\nBasic Operations:\n");
         printf("1. Addition\n");
         printf("2. Subtraction\n");
         printf("3. Multiplication\n");
         printf("4. Division\n");
-        
-        printf("\n Trignometric Operations:\n");
+
+        printf("\nTrigonometric Operations:\n");
         printf("5. Sine\n");
         printf("6. Cosine\n");
         printf("7. Tangent\n");
         printf("8. Arcsine\n");
         printf("9. Arccosine\n");
         printf("10. Arctangent\n");
-        printf("11. Exit\n");
 
-        printf("Enter your choice (1-11): ");
+        printf("\nAlgebraic Operations:\n");
+        printf("11. Exponentiation\n");
+        printf("12. Square Root\n");
+        printf("13. Cube Root\n");
+        printf("14. nth Root\n");
+        printf("15. Factorial\n");
+        printf("16. Absolute Value\n");
+        printf("\n0. Exit\n");
+
+        printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
-        if (choice == 11) {
+        if (choice == 0) {
             printf("Exiting the calculator. Goodbye!\n");
             break;
         }
 
         if (choice >= 1 && choice <= 4) {
             // For basic arithmetic operations
-            performBasicOperation(choice);
+            BasicOperation(choice);
         } else if (choice >= 5 && choice <= 10) {
             // For trigonometric operations
-            performTrigonometricOperation(choice);
+            TrigonometricOperation(choice);
+        } else if (choice >= 11 && choice <= 16) {
+            // For Algebraic operations
+    		double result = AlgebraicOperation(choice, num1, num2);
+        	printf("Result: %lf\n", result);
         } else {
-            printf("Invalid choice. Please enter a number between 1 and 11.\n");
+            printf("Invalid choice. Please enter a number between 0 and 16.\n");
+            continue;
         }
     }
 
     return 0;
 }
 
-// Function to perform basic arithmetic operations
-void performBasicOperation(int choice) {
+void BasicOperation(int choice) {
     int n1, n2;
     printf("Enter the first number: ");
     scanf("%d", &n1);
@@ -76,8 +90,7 @@ void performBasicOperation(int choice) {
     }
 }
 
-// Function to perform trigonometric operations
-void performTrigonometricOperation(int choice) {
+void TrigonometricOperation(int choice) {
     double angle, result;
 
     printf("Enter the angle in degrees: ");
@@ -99,16 +112,61 @@ void performTrigonometricOperation(int choice) {
             printf("Tangent of %.2lf degrees is %.4lf\n", angle, result);
             break;
         case 8:
-            result = asin(sin(radianAngle));
-            printf("Arcsine of %.2lf degrees is %.4lf\n", angle, result * 180.0 / M_PI);
+            result = asin(sin(radianAngle)) * 180.0 / M_PI;
+            printf("Arcsine of %.2lf degrees is %.4lf\n", angle, result);
             break;
         case 9:
-            result = acos(cos(radianAngle));
-            printf("Arccosine of %.2lf degrees is %.4lf\n", angle, result * 180.0 / M_PI);
+            result = acos(cos(radianAngle)) * 180.0 / M_PI;
+            printf("Arccosine of %.2lf degrees is %.4lf\n", angle, result);
             break;
         case 10:
-            result = atan(tan(radianAngle));
-            printf("Arctangent of %.2lf degrees is %.4lf\n", angle, result * 180.0 / M_PI);
+            result = atan(tan(radianAngle)) * 180.0 / M_PI;
+            printf("Arctangent of %.2lf degrees is %.4lf\n", angle, result);
             break;
     }
+}
+
+double AlgebraicOperation(int choice, double num1, double num2) {
+    double result;
+
+    switch (choice) {
+        case 11:
+            printf("Enter the base: ");
+            scanf("%lf", &num1);
+            printf("Enter the exponent: ");
+            scanf("%lf", &num2);
+            result = pow(num1, num2);
+            break;
+        case 12:
+            printf("Enter the number: ");
+            scanf("%lf", &num1);
+            result = (num1 >= 0) ? sqrt(num1) : NAN;
+            break;
+        case 13:
+            printf("Enter the number: ");
+            scanf("%lf", &num1);
+            result = cbrt(num1);
+            break;
+        case 14:
+            printf("Enter the base: ");
+            scanf("%lf", &num1);
+            printf("Enter the root (n): ");
+            scanf("%lf", &num2);
+            result = (num1 >= 0 || (num2 == 2 && num1 < 0)) ? pow(num1, 1 / num2) : NAN;
+            break;
+        case 15:
+            printf("Enter the number: ");
+            scanf("%lf", &num1);
+            result = (num1 < 0) ? NAN : tgamma(num1 + 1);
+            break;
+        case 16:
+            printf("Enter the number: ");
+            scanf("%lf", &num1);
+            result = fabs(num1);
+            break;
+        default:
+            result = NAN;
+    }
+
+    return result;
 }
