@@ -2,33 +2,46 @@
 #include <math.h>
 
 // Function declarations
-void BasicOperation(int choice);
+void performBasicOperation(int choice);
+void performTrigonometricOperation(int choice);
 
 int main() {
     int choice;
 
     while (1) {
         // Display menu for the combined calculator
-        printf("\nCalculator Menu:\n");
+        printf("\n Scientific Calculator Menu:\n");
+        printf("\n Basic Operations:\n");
         printf("1. Addition\n");
         printf("2. Subtraction\n");
         printf("3. Multiplication\n");
         printf("4. Division\n");
-        printf("5. Exit\n");
+        
+        printf("\n Trignometric Operations:\n");
+        printf("5. Sine\n");
+        printf("6. Cosine\n");
+        printf("7. Tangent\n");
+        printf("8. Arcsine\n");
+        printf("9. Arccosine\n");
+        printf("10. Arctangent\n");
+        printf("11. Exit\n");
 
-        printf("Enter your choice (1-5): ");
+        printf("Enter your choice (1-11): ");
         scanf("%d", &choice);
 
-        if (choice == 5) {
+        if (choice == 11) {
             printf("Exiting the calculator. Goodbye!\n");
             break;
         }
 
         if (choice >= 1 && choice <= 4) {
             // For basic arithmetic operations
-            BasicOperation(choice);
+            performBasicOperation(choice);
+        } else if (choice >= 5 && choice <= 10) {
+            // For trigonometric operations
+            performTrigonometricOperation(choice);
         } else {
-            printf("Invalid choice. Please enter a number between 1 and 5.\n");
+            printf("Invalid choice. Please enter a number between 1 and 11.\n");
         }
     }
 
@@ -36,7 +49,7 @@ int main() {
 }
 
 // Function to perform basic arithmetic operations
-void BasicOperation(int choice) {
+void performBasicOperation(int choice) {
     int n1, n2;
     printf("Enter the first number: ");
     scanf("%d", &n1);
@@ -59,6 +72,43 @@ void BasicOperation(int choice) {
             } else {
                 printf("Error: Division by zero.\n");
             }
+            break;
+    }
+}
+
+// Function to perform trigonometric operations
+void performTrigonometricOperation(int choice) {
+    double angle, result;
+
+    printf("Enter the angle in degrees: ");
+    scanf("%lf", &angle);
+
+    double radianAngle = angle * M_PI / 180.0;
+
+    switch (choice) {
+        case 5:
+            result = sin(radianAngle);
+            printf("Sine of %.2lf degrees is %.4lf\n", angle, result);
+            break;
+        case 6:
+            result = cos(radianAngle);
+            printf("Cosine of %.2lf degrees is %.4lf\n", angle, result);
+            break;
+        case 7:
+            result = tan(radianAngle);
+            printf("Tangent of %.2lf degrees is %.4lf\n", angle, result);
+            break;
+        case 8:
+            result = asin(sin(radianAngle));
+            printf("Arcsine of %.2lf degrees is %.4lf\n", angle, result * 180.0 / M_PI);
+            break;
+        case 9:
+            result = acos(cos(radianAngle));
+            printf("Arccosine of %.2lf degrees is %.4lf\n", angle, result * 180.0 / M_PI);
+            break;
+        case 10:
+            result = atan(tan(radianAngle));
+            printf("Arctangent of %.2lf degrees is %.4lf\n", angle, result * 180.0 / M_PI);
             break;
     }
 }
